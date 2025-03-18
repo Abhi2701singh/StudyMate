@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Note{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">Add New Note</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="year" class="form-label">Year</label>
+                            <select class="form-select" id="year" name="year" required>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd Year</option>
+                                <option value="4">4th Year</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="subject" name="subject" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject_image" class="form-label">Subject Image (Optional)</label>
+                            <input type="file" class="form-control" id="subject_image" name="subject_image" accept="image/*">
+                        </div>
+                        <div class="mb-3">
+                            <label for="is_quantum" class="form-label">Is Quantum Note?</label>
+                            <select class="form-select" id="is_quantum" name="is_quantum">
+                                <option value="false">No</option>
+                                <option value="true">Yes</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="chapter" class="form-label">Chapter</label>
+                            <input type="text" class="form-control" id="chapter" name="chapter" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Upload Note File</label>
+                            <input type="file" class="form-control" id="file" name="file" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Upload Note</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,26 @@
+studymate/
+├── manage.py
+├── studymate/
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── notes/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── models.py
+│   ├── views.py
+│   ├── urls.py
+│   └── forms.py
+├── templates/
+│   ├── base.html
+│   ├── home.html
+│   ├── login.html
+│   ├── signup.html
+│   ├── year_notes.html
+│   └── quantum.html
+└── static/
+    ├── css/
+    │   └── style.css
+    └── js/
+        └── main.js 

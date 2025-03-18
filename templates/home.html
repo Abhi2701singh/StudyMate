@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="display-4">StudyMate</h1>
+            <p class="lead">Engineering Notes Management System</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h3>1st Year</h3>
+                    <a href="{% url 'year_notes' 1 %}" class="btn btn-primary mt-3">View Notes</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h3>2nd Year</h3>
+                    <a href="{% url 'year_notes' 2 %}" class="btn btn-primary mt-3">View Notes</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h3>3rd Year</h3>
+                    <a href="{% url 'year_notes' 3 %}" class="btn btn-primary mt-3">View Notes</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h3>4th Year</h3>
+                    <a href="{% url 'year_notes' 4 %}" class="btn btn-primary mt-3">View Notes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
