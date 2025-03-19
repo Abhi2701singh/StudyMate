@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ year }}{% endblock %}
+
+{% block content %}
+<style>
+    .year-header {
+        background: linear-gradient(45deg, #2196F3, #1976D2);
+        color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        margin-bottom: 40px;
+    }
+
+    .subject-header {
+        background: linear-gradient(to right, #1976D2, #2196F3);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+    }
+
+    .subject-header i {
+        margin-right: 15px;
+        font-size: 24px;
+    }
+
+    .subject-header h2 {
+        margin: 0;
+        font-size: 1.8rem;
+    }
+
+    .notes-container {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+</style>
+
+<div class="container py-5">
+    <!-- Year Header -->
+    <div class="year-header text-center">
+        <h1 class="display-4 mb-0">{{ year }}</h1>
+    </div>
+
+    {% for subject_data in subjects %}
+        <!-- Subject Section -->
+        <div class="notes-container">
+            <!-- Subject Header -->
+            <div class="subject-header">
+                <i class="fas fa-book"></i>
+                <h2>{{ subject_data.subject.name }}</h2>
+            </div>
+            
+            <!-- Notes Grid -->
+            <div class="row mt-4">
+                {% for note in subject_data.notes %}
+                    <div class="col-md-2 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            {% if note.chapter.image %}
+                                <img src="{{ note.chapter.image.url }}" class="card-img-top" alt="{{ note.title }}">
+                            {% endif %}
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ note.title }}</h5>
+                                <p class="card-text small text-muted">{{ note.chapter.name }}</p>
+                                <div class="mt-3">
+                                    <a href="{{ note.file.url }}" class="btn btn-primary btn-sm" download>
+                                        <i class="fas fa-download me-1"></i> Download
+                                    </a>
+                                    {% if request.user.is_staff %}
+                                        <a href="{% url 'delete_note' note.id %}" class="btn btn-danger btn-sm mt-2">
+                                            <i class="fas fa-trash me-1"></i> Delete
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="card-footer text-muted small">
+                                <i class="far fa-clock me-1"></i>
+                                Uploaded: {{ note.upload_date|date:"d M Y" }}
+                            </div>
+                        </div>
+                    </div>
+                    {% if forloop.counter|divisibleby:5 and not forloop.last %}
+                        </div><div class="row mt-4">
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %} 

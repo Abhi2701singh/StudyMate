@@ -15,52 +15,38 @@ def home(request):
     })
 
 def year_notes(request, year):
-    """Display notes for a specific year"""
-    # Get all subjects for this year that aren't quantum
-    subjects = Subject.objects.filter(year=year, is_quantum=False)
+    """Display notes for a specific year (excluding quantum)"""
+    subjects = Subject.objects.filter(year=year, is_quantum=False)  # Added is_quantum=False
+    context = {
+        'year': f'{year}{"st" if year == 1 else "nd" if year == 2 else "rd" if year == 3 else "th"} Year',
+        'subjects': []
+    }
     
-    # Get all notes for these subjects
-    notes = Note.objects.filter(
-        chapter__subject__year=year,
-        chapter__subject__is_quantum=False
-    ).order_by('-upload_date')  # Changed from uploaded_at to upload_date
+    for subject in subjects:
+        subject_notes = Note.objects.filter(chapter__subject=subject).order_by('-upload_date')
+        context['subjects'].append({
+            'subject': subject,
+            'notes': subject_notes
+        })
     
-    return render(request, 'year_notes.html', {
-        'year': year,
-        'subjects': subjects,
-        'notes': notes,
-        'is_staff': request.user.is_staff  # Pass this to template to control delete button visibility
-    })
+    return render(request, 'year_view.html', context)
 
 def quantum(request):
-    """Display quantum notes organized by year"""
-    # Get all quantum notes and organize them by year
-    quantum_subjects = Subject.objects.filter(is_quantum=True)
+    """Display quantum notes"""
+    subjects = Subject.objects.filter(is_quantum=True)
+    context = {
+        'year': 'Quantum',
+        'subjects': []
+    }
     
-    year_notes = {}
-    for year in range(1, 5):  # Years 1-4
-        notes_data = []
-        subjects = quantum_subjects.filter(year=year)
-        
-        for subject in subjects:
-            for chapter in subject.chapter_set.all():
-                for note in chapter.note_set.all():
-                    notes_data.append({
-                        'note': note,
-                        'chapter': chapter,
-                        'subject': subject
-                    })
-        
-        if notes_data:  # Only add years that have notes
-            year_notes[year] = {
-                'year_name': f'{year}{"st" if year == 1 else "nd" if year == 2 else "rd" if year == 3 else "th"} Year',
-                'notes': notes_data
-            }
+    for subject in subjects:
+        subject_notes = Note.objects.filter(chapter__subject=subject).order_by('-upload_date')
+        context['subjects'].append({
+            'subject': subject,
+            'notes': subject_notes
+        })
     
-    return render(request, 'quantum.html', {
-        'year_notes': year_notes,
-        'is_staff': request.user.is_staff  # Pass this to template to control delete button visibility
-    })
+    return render(request, 'quantum.html', context)  # Changed to quantum.html
 
 def staff_required(view_func):
     """Decorator to restrict access to staff only"""
@@ -72,11 +58,12 @@ def staff_required(view_func):
     return wrapper
 
 @login_required
-@staff_required  # Only allow staff to access this view
+@staff_required
 def add_note(request):
-    """Add a new note (staff only)"""
     if request.method == 'POST':
         uploaded_file = request.FILES.get('file')
+        chapter_image = request.FILES.get('chapter_image')  # Get chapter image
+        
         if uploaded_file:
             subject, created = Subject.objects.get_or_create(
                 name=request.POST.get('subject'),
@@ -84,13 +71,14 @@ def add_note(request):
                 is_quantum=request.POST.get('is_quantum') == 'true'
             )
             
-            if 'subject_image' in request.FILES:
-                subject.image = request.FILES['subject_image']
-                subject.save()
-            
+            # Create chapter with image
             chapter, created = subject.chapter_set.get_or_create(
                 name=request.POST.get('chapter')
             )
+            
+            if chapter_image:
+                chapter.image = chapter_image
+                chapter.save()
             
             note = Note(
                 title=request.POST.get('title'),
@@ -141,4 +129,76 @@ def signup(request):
     
     return render(request, 'signup.html', {
         'form': form
+    })
+
+def first_year(request):
+    subjects = Subject.objects.filter(year=1)
+    context = {
+        'year': '1st Year',
+        'subjects': []
+    }
+    
+    for subject in subjects:
+        subject_notes = Note.objects.filter(chapter__subject=subject).order_by('-upload_date')
+        context['subjects'].append({
+            'subject': subject,
+            'notes': subject_notes
+        })
+    
+    return render(request, 'year_view.html', context)
+
+def second_year(request):
+    subjects = Subject.objects.filter(year=2)
+    context = {
+        'year': '2nd Year',
+        'subjects': []
+    }
+    
+    for subject in subjects:
+        subject_notes = Note.objects.filter(chapter__subject=subject).order_by('-upload_date')
+        context['subjects'].append({
+            'subject': subject,
+            'notes': subject_notes
+        })
+    
+    return render(request, 'year_view.html', context)
+
+def third_year(request):
+    subjects = Subject.objects.filter(year=3)
+    context = {
+        'year': '3rd Year',
+        'subjects': []
+    }
+    
+    for subject in subjects:
+        subject_notes = Note.objects.filter(chapter__subject=subject).order_by('-upload_date')
+        context['subjects'].append({
+            'subject': subject,
+            'notes': subject_notes
+        })
+    
+    return render(request, 'year_view.html', context)
+
+def fourth_year(request):
+    subjects = Subject.objects.filter(year=4)
+    context = {
+        'year': '4th Year',
+        'subjects': []
+    }
+    
+    for subject in subjects:
+        subject_notes = Note.objects.filter(chapter__subject=subject).order_by('-upload_date')
+        context['subjects'].append({
+            'subject': subject,
+            'notes': subject_notes
+        })
+    
+    return render(request, 'year_view.html', context)
+
+def subject_notes(request, subject_id):
+    subject = get_object_or_404(Subject, id=subject_id)
+    notes = Note.objects.filter(chapter__subject=subject).order_by('-upload_date')
+    return render(request, 'subject_notes.html', {
+        'subject': subject,
+        'notes': notes
     })

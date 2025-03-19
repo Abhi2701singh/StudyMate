@@ -3,12 +3,7 @@ from django.contrib.auth.models import User
 
 class Subject(models.Model):
     name = models.CharField(max_length=100)
-    year = models.IntegerField(choices=[
-        (1, '1st Year'),
-        (2, '2nd Year'),
-        (3, '3rd Year'),
-        (4, '4th Year')
-    ])
+    year = models.IntegerField()  # 1 for 1st year, 2 for 2nd year, etc.
     image = models.ImageField(upload_to='subject_images/', null=True, blank=True)
     is_quantum = models.BooleanField(default=False)
 
@@ -19,8 +14,9 @@ class Subject(models.Model):
         ordering = ['name']
 
 class Chapter(models.Model):
+    name = models.CharField(max_length=255)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='chapter_images/', null=True, blank=True)
     
     def __str__(self):
         return self.name

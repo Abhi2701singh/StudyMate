@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ subject.name }} Notes{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="display-4">{{ subject.name }}</h1>
+            <p class="lead">Available Notes</p>
+        </div>
+    </div>
+
+    <!-- Notes Cards -->
+    <div class="container">
+        <div class="row">
+            {% for note in notes %}
+                <div class="col-md-2 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        {% if note.chapter.image %}
+                            <img src="{{ note.chapter.image.url }}" class="card-img-top" alt="{{ note.title }}">
+                        {% endif %}
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ note.title }}</h5>
+                            <p class="card-text small text-muted">{{ note.chapter.name }}</p>
+                            <div class="mt-3">
+                                <a href="{{ note.file.url }}" class="btn btn-primary btn-sm" download>Download</a>
+                                {% if request.user.is_staff %}
+                                    <a href="{% url 'delete_note' note.id %}" class="btn btn-danger btn-sm mt-2">Delete</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted small">
+                            Uploaded: {{ note.upload_date|date:"d M Y" }}
+                        </div>
+                    </div>
+                </div>
+                {% if forloop.counter|divisibleby:5 and not forloop.last %}
+                    </div><div class="row">
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %} 
