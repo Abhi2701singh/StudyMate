@@ -14,12 +14,16 @@ class Subject(models.Model):
         ordering = ['name']
 
 class Chapter(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=200)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='chapter_images/', null=True, blank=True)
-    
+    unit_number = models.IntegerField(default=1)
+
+    class Meta:
+        ordering = ['unit_number', 'name']
+
     def __str__(self):
-        return self.name
+        return f"Unit {self.unit_number}: {self.name}"
 
 class Note(models.Model):
     title = models.CharField(max_length=200)

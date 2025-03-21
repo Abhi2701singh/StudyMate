@@ -7,46 +7,55 @@ from django.contrib import messages
 from .models import Note, Subject  # Add Subject to imports if not already there
 from django.core.exceptions import PermissionDenied
 
+@login_required
 def home(request):
     """Home page view with recent notes"""
-    recent_notes = Note.objects.all().order_by('-upload_date')[:5]  # Changed from uploaded_at to upload_date
+    recent_notes = Note.objects.all().order_by('-upload_date')[:5]
     return render(request, 'home.html', {
         'recent_notes': recent_notes
     })
 
+@login_required
 def year_notes(request, year):
     """Display notes for a specific year (excluding quantum)"""
-    subjects = Subject.objects.filter(year=year, is_quantum=False)  # Added is_quantum=False
-    context = {
-        'year': f'{year}{"st" if year == 1 else "nd" if year == 2 else "rd" if year == 3 else "th"} Year',
-        'subjects': []
-    }
+    subjects = Subject.objects.filter(year=year, is_quantum=False)
+    subjects_data = []
     
     for subject in subjects:
-        subject_notes = Note.objects.filter(chapter__subject=subject).order_by('-upload_date')
-        context['subjects'].append({
+        # Order chapters by unit number
+        chapters = subject.chapter_set.all().order_by('unit_number')
+        notes = []
+        for chapter in chapters:
+            chapter_notes = Note.objects.filter(chapter=chapter).order_by('title')
+            notes.extend(chapter_notes)
+            
+        subjects_data.append({
             'subject': subject,
-            'notes': subject_notes
+            'chapters': chapters,
+            'notes': notes
         })
     
-    return render(request, 'year_view.html', context)
+    return render(request, 'year_view.html', {
+        'year': f'{year}{"st" if year == 1 else "nd" if year == 2 else "rd" if year == 3 else "th"} Year',
+        'subjects': subjects_data
+    })
 
+@login_required
 def quantum(request):
     """Display quantum notes"""
     subjects = Subject.objects.filter(is_quantum=True)
-    context = {
-        'year': 'Quantum',
-        'subjects': []
-    }
+    subjects_data = []
     
     for subject in subjects:
-        subject_notes = Note.objects.filter(chapter__subject=subject).order_by('-upload_date')
-        context['subjects'].append({
+        notes = Note.objects.filter(chapter__subject=subject).order_by('-upload_date')
+        subjects_data.append({
             'subject': subject,
-            'notes': subject_notes
+            'notes': notes
         })
     
-    return render(request, 'quantum.html', context)  # Changed to quantum.html
+    return render(request, 'quantum.html', {
+        'subjects': subjects_data
+    })
 
 def staff_required(view_func):
     """Decorator to restrict access to staff only"""
@@ -71,10 +80,15 @@ def add_note(request):
                 is_quantum=request.POST.get('is_quantum') == 'true'
             )
             
-            # Create chapter with image
+            # Create chapter with unit number
             chapter, created = subject.chapter_set.get_or_create(
-                name=request.POST.get('chapter')
+                name=request.POST.get('chapter'),
+                defaults={'unit_number': request.POST.get('unit_number', 1)}
             )
+            
+            if not created:
+                chapter.unit_number = request.POST.get('unit_number', 1)
+                chapter.save()
             
             if chapter_image:
                 chapter.image = chapter_image

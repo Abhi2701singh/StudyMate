@@ -3,58 +3,436 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+<!-- Hero Section -->
+<div class="hero-section text-center py-5" style="background: linear-gradient(135deg, #1a237e, #0d47a1); color: white; padding: 80px 0;">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-4">StudyMate</h1>
+        
+        <p class="mb-5" style="font-size: 1.1rem;">Access all your engineering study materials in one place</p>
+    </div>
+</div>
+
+<!-- Year Cards Section -->
 <div class="container py-5">
-    <div class="row mb-4">
-        <div class="col-12 text-center">
-            <h1 class="display-4">StudyMate</h1>
-            <p class="lead">Engineering Notes Management System</p>
+    <div class="row justify-content-center g-4">
+        <!-- 1st Year Card -->
+        <div class="col-md-4 col-lg-2">
+            <a href="{% url 'year_notes' 1 %}" class="text-decoration-none">
+                <div class="year-card h-100" style="background: linear-gradient(135deg, #4CAF50, #388E3C);">
+                    <div class="year-card-content">
+                        <i class="fas fa-seedling fa-3x mb-3"></i>
+                        <h3>1st Year</h3>
+                        <p>Foundation Studies</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- 2nd Year Card -->
+        <div class="col-md-4 col-lg-2">
+            <a href="{% url 'year_notes' 2 %}" class="text-decoration-none">
+                <div class="year-card h-100" style="background: linear-gradient(135deg, #2196F3, #1976D2);">
+                    <div class="year-card-content">
+                        <i class="fas fa-cogs fa-3x mb-3"></i>
+                        <h3>2nd Year</h3>
+                        <p>Core Concepts</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- 3rd Year Card -->
+        <div class="col-md-4 col-lg-2">
+            <a href="{% url 'year_notes' 3 %}" class="text-decoration-none">
+                <div class="year-card h-100" style="background: linear-gradient(135deg, #9C27B0, #7B1FA2);">
+                    <div class="year-card-content">
+                        <i class="fas fa-laptop-code fa-3x mb-3"></i>
+                        <h3>3rd Year</h3>
+                        <p>Advanced Topics</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- 4th Year Card -->
+        <div class="col-md-4 col-lg-2">
+            <a href="{% url 'year_notes' 4 %}" class="text-decoration-none">
+                <div class="year-card h-100" style="background: linear-gradient(135deg, #FF5722, #E64A19);">
+                    <div class="year-card-content">
+                        <i class="fas fa-graduation-cap fa-3x mb-3"></i>
+                        <h3>4th Year</h3>
+                        <p>Specialization</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Quantum Card -->
+        <div class="col-md-4 col-lg-2">
+            <a href="{% url 'quantum' %}" class="text-decoration-none">
+                <div class="year-card h-100" style="background: linear-gradient(135deg, #311B92, #4527A0);">
+                    <div class="year-card-content">
+                        <i class="fas fa-atom fa-3x mb-3"></i>
+                        <h3>Quantum</h3>
+                        <p>Advanced Studies</p>
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
+</div>
 
-    <!-- Year Cards Section -->
+<!-- Features Section -->
+<div class="bg-light py-5">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-2 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">1st Year</h5>
-                        <a href="{% url 'year_notes' 1 %}" class="btn btn-primary mt-3">View Notes</a>
+        <h2 class="text-center mb-5">Why Choose StudyMate?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="text-center feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-reader fa-3x mb-3 text-primary"></i>
+                    </div>
+                    <h4>Organized Content</h4>
+                    <p>Well-structured notes by units and subjects</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center feature-card">
+                    <i class="fas fa-mobile-alt fa-3x mb-3 text-primary"></i>
+                    <h4>Mobile Friendly</h4>
+                    <p>Access notes from any device, anywhere</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center feature-card">
+                    <i class="fas fa-clock fa-3x mb-3 text-primary"></i>
+                    <h4>24/7 Available</h4>
+                    <p>Access your notes anytime you need</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Features -->
+        <div class="row g-4 mt-4">
+            <div class="col-md-4">
+                <div class="feature-card-advanced">
+                    <div class="feature-icon-wrapper">
+                        <i class="fas fa-shield-alt text-primary"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Secure Access</h4>
+                        <p>Protected content with user authentication</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">2nd Year</h5>
-                        <a href="{% url 'year_notes' 2 %}" class="btn btn-primary mt-3">View Notes</a>
+            <div class="col-md-4">
+                <div class="feature-card-advanced">
+                    <div class="feature-icon-wrapper">
+                        <i class="fas fa-graduation-cap text-primary"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Quality Content</h4>
+                        <p>Verified and curated study materials</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">3rd Year</h5>
-                        <a href="{% url 'year_notes' 3 %}" class="btn btn-primary mt-3">View Notes</a>
+            <div class="col-md-4">
+                <div class="feature-card-advanced">
+                    <div class="feature-icon-wrapper">
+                        <i class="fas fa-users text-primary"></i>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-2 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">4th Year</h5>
-                        <a href="{% url 'year_notes' 4 %}" class="btn btn-primary mt-3">View Notes</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Quantum</h5>
-                        <a href="{% url 'quantum' %}" class="btn btn-primary mt-3">View Notes</a>
+                    <div class="feature-content">
+                        <h4>Community Driven</h4>
+                        <p>Growing collection of shared knowledge</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Footer Section -->
+<footer class="footer-section bg-dark text-light py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <!-- About Section -->
+            <div class="col-lg-4 mb-4">
+                <h4 class="text-primary mb-4">About StudyMate</h4>
+                <p>StudyMate is your one-stop solution for engineering study materials. Access, download, and manage your academic resources with ease.</p>
+                <div class="social-links mt-3">
+                    <a href="#" class="me-3"><i class="fab fa-github fa-lg"></i></a>
+                    <a href="#" class="me-3"><i class="fab fa-linkedin fa-lg"></i></a>
+                    <a href="#" class="me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-lg-4 mb-4">
+                <h4 class="text-primary mb-4">Quick Links</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a href="{% url 'year_notes' 1 %}" class="text-light text-decoration-none">
+                            <i class="fas fa-chevron-right me-2"></i>1st Year Notes
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="{% url 'year_notes' 2 %}" class="text-light text-decoration-none">
+                            <i class="fas fa-chevron-right me-2"></i>2nd Year Notes
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="{% url 'year_notes' 3 %}" class="text-light text-decoration-none">
+                            <i class="fas fa-chevron-right me-2"></i>3rd Year Notes
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="{% url 'year_notes' 4 %}" class="text-light text-decoration-none">
+                            <i class="fas fa-chevron-right me-2"></i>4th Year Notes
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="{% url 'quantum' %}" class="text-light text-decoration-none">
+                            <i class="fas fa-chevron-right me-2"></i>Quantum Notes
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-lg-4 mb-4">
+                <h4 class="text-primary mb-4">Developer Contact</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-user me-2"></i>Abhinav Singh
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-envelope me-2"></i>studymate@gmail.com
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-phone me-2"></i>+91 739857XXXX
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-map-marker-alt me-2"></i>Lucknow, India
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copyright Bar -->
+    <div class="copyright-bar mt-4 pt-4 border-top border-secondary">
+        <div class="container text-center">
+            <p class="mb-0">© 2025 StudyMate. Developed with <i class="fas fa-heart text-danger"></i> by Abhinav Singh</p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .hero-section {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('https://source.unsplash.com/random/1920x1080/?education') center/cover;
+        opacity: 0.1;
+    }
+
+    .feature-card {
+        padding: 30px;
+        transition: transform 0.3s ease;
+        border-radius: 10px;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .feature-icon {
+        margin-bottom: 20px;
+        color: #1a237e;
+    }
+
+    .feature-icon i {
+        background: linear-gradient(135deg, #f8f9fa, #ffffff);
+        padding: 30px;
+        border-radius: 50%;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .feature-title {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #1a237e;
+    }
+
+    .feature-text {
+        color: #6c757d;
+        font-size: 1.1rem;
+    }
+
+    .card {
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .year-card {
+        color: white;
+        padding: 30px 20px;
+        border-radius: 15px;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .year-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-100%);
+        transition: transform 0.5s ease;
+    }
+
+    .year-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+
+    .year-card:hover::before {
+        transform: translateX(0);
+    }
+
+    .year-card-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .year-card h3 {
+        font-size: 1.5rem;
+        margin: 10px 0;
+        font-weight: 600;
+    }
+
+    .year-card p {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin: 0;
+    }
+
+    .year-card i {
+        opacity: 0.9;
+        transition: transform 0.3s ease;
+    }
+
+    .year-card:hover i {
+        transform: scale(1.1);
+    }
+
+    /* Add shimmer effect */
+    @keyframes shimmer {
+        0% {
+            background-position: -100% 0;
+        }
+        100% {
+            background-position: 100% 0;
+        }
+    }
+
+    .year-card::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            60deg,
+            rgba(255,255,255,0) 0%,
+            rgba(255,255,255,0.1) 50%,
+            rgba(255,255,255,0) 100%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 3s infinite;
+        pointer-events: none;
+    }
+
+    .footer-section {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .footer-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(26, 35, 126, 0.1), rgba(13, 71, 161, 0.1));
+        pointer-events: none;
+    }
+
+    .social-links a {
+        color: #fff;
+        transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+        color: #2196F3;
+    }
+
+    .list-unstyled li a {
+        transition: all 0.3s ease;
+    }
+
+    .list-unstyled li a:hover {
+        color: #2196F3 !important;
+        transform: translateX(5px);
+        display: inline-block;
+    }
+
+    .copyright-bar {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    /* Animated heart in footer */
+    .fa-heart {
+        animation: heartbeat 1.5s infinite;
+    }
+
+    @keyframes heartbeat {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+
+    /* Hover effects for contact info */
+    .list-unstyled li {
+        transition: transform 0.3s ease;
+    }
+
+    .list-unstyled li:hover {
+        transform: translateX(5px);
+    }
+
+    /* Make icons in footer more visible */
+    .list-unstyled li i {
+        color: #2196F3;
+    }
+</style>
 {% endblock %} 
