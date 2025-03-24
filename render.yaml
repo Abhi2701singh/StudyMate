@@ -1,0 +1,5 @@
+services:
+  - type: web
+    name: studymate
+    buildCommand: pip install poetry && poetry install
+    startCommand: poetry run python app.py 
